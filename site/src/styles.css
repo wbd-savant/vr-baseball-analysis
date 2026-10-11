@@ -61,12 +61,13 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  font-size: 1.25rem; /* text at 1.25x the browser default; every font-size below is scaled to match */
   line-height: 1.5;
   word-break: keep-all;
 }
 
 h1 {
-  font-size: 1.4rem;
+  font-size: 1.75rem;
   margin: 0 0 0.5rem;
 }
 
@@ -169,18 +170,18 @@ a {
 }
 
 h2 {
-  font-size: 1.15rem;
+  font-size: 1.4375rem;
   margin: 1.75rem 0 0.5rem;
 }
 
 h3 {
-  font-size: 0.95rem;
+  font-size: 1.1875rem;
   margin: 1rem 0 0.4rem;
   color: var(--muted);
 }
 
 .small {
-  font-size: 0.85rem;
+  font-size: 1.0625rem;
 }
 
 .row {
@@ -247,7 +248,7 @@ select {
 
 .home-search .search input {
   width: 100%;
-  font-size: 1.05rem;
+  font-size: 1.3125rem;
   min-height: 48px;
 }
 
@@ -310,7 +311,7 @@ select {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  font-size: 0.85rem;
+  font-size: 1.0625rem;
   color: var(--muted);
 }
 
@@ -337,7 +338,7 @@ table.stats {
   border-collapse: collapse;
   width: 100%;
   font-variant-numeric: tabular-nums;
-  font-size: 0.9rem;
+  font-size: 1.125rem;
 }
 
 table.stats th,
@@ -405,7 +406,7 @@ button.help-btn {
   height: 1.25rem;
   padding: 0;
   border-radius: 50%;
-  font-size: 0.7rem;
+  font-size: 0.875rem;
   line-height: 1;
   background: var(--bg);
   color: var(--muted);
@@ -423,8 +424,7 @@ button.help-btn::after {
   position: fixed;
   z-index: 30;
   width: min(20rem, calc(100vw - 16px));
-  max-height: 70vh;
-  overflow-y: auto;
+  overflow-y: auto; /* max-height is set from the room on screen (StatHelp) */
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
@@ -441,7 +441,7 @@ button.help-btn::after {
 
 .help-part b {
   display: block;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--muted);
 }
 
@@ -453,7 +453,7 @@ button.help-btn::after {
 
 /* Player page */
 .player-head h1 {
-  font-size: 1.6rem;
+  font-size: 2rem;
   margin-bottom: 0.25rem;
 }
 
@@ -467,7 +467,7 @@ button.help-btn::after {
   display: inline-block;
   padding: 0.15rem 0.6rem;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 1rem;
   background: var(--bg);
   border: 1px solid var(--border);
 }
@@ -601,11 +601,11 @@ label.inline {
 .chart-head h3 {
   margin: 0;
   color: var(--text);
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 .chart-card h4 {
-  font-size: 0.85rem;
+  font-size: 1.0625rem;
   font-weight: 600;
   color: var(--muted);
   margin: 0.75rem 0 0.25rem;
@@ -614,7 +614,7 @@ label.inline {
 button.guide-btn {
   min-height: 32px;
   padding: 0 0.7rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
   background: var(--bg);
   color: var(--text);
@@ -699,7 +699,7 @@ g:hover > .viz-cell {
 }
 
 .viz-label {
-  font-size: 13px;
+  font-size: 16.25px;
   font-weight: 600;
   text-anchor: middle;
   dominant-baseline: central;
@@ -741,13 +741,13 @@ g:hover > .viz-cell {
 }
 
 .viz-tick {
-  font-size: 11px;
+  font-size: 13.75px;
   fill: var(--viz-tick);
   dominant-baseline: central;
 }
 
 .viz-value {
-  font-size: 11px;
+  font-size: 13.75px;
   font-weight: 600;
   fill: var(--text);
 }
@@ -778,7 +778,7 @@ g:hover > .viz-cell {
   flex-direction: column;
   gap: 0.1rem;
   padding: 0.4rem 0.6rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
   white-space: nowrap;
   pointer-events: none;
   background: var(--surface);
@@ -799,7 +799,7 @@ g:hover > .viz-cell {
   list-style: none;
   padding: 0;
   margin: 0.5rem 0 0;
-  font-size: 0.85rem;
+  font-size: 1.0625rem;
 }
 
 .legend li {
@@ -817,7 +817,7 @@ g:hover > .viz-cell {
 
 .table-view {
   margin-top: 0.75rem;
-  font-size: 0.85rem;
+  font-size: 1.0625rem;
 }
 
 .table-view summary {
@@ -849,7 +849,7 @@ ul.pctl li {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  font-size: 0.85rem;
+  font-size: 1.0625rem;
 }
 
 .pctl-track {
@@ -896,14 +896,14 @@ ul.pctl li {
   border: 2px solid var(--surface);
   display: grid;
   place-items: center;
-  font-size: 0.72rem;
+  font-size: 0.9rem;
   font-weight: 700;
 }
 
 .pctl-value {
   text-align: right;
   font-variant-numeric: tabular-nums;
-  font-size: 0.85rem;
+  font-size: 1.0625rem;
 }
 
 .guide ul {
@@ -936,7 +936,7 @@ ul.pctl li {
   border-left: 3px solid var(--accent);
   border-radius: 8px;
   background: var(--surface);
-  font-size: 0.9rem;
+  font-size: 1.125rem;
 }
 
 /* 풀버전 buttons: in the header and on pages only the full version has. */

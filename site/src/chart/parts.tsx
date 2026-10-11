@@ -302,6 +302,9 @@ export function VideoPane(props: { url: string | null; onClock: (get: () => numb
   );
 }
 
+/** Columns that hold a player_id. */
+const PLAYER_FIELD = /^(pitcher_id|batter_id|catcher_id|runner_[123]|fielder_[3-9])$/;
+
 /** Edit any field of an existing row. Later rows are not recomputed. */
 export function RowEditor(props: {
   row: PitchRow;
@@ -313,6 +316,7 @@ export function RowEditor(props: {
   const [values, setValues] = useState<Record<string, string>>(() =>
     Object.fromEntries(Object.keys(props.schema).map((k) => [k, String((props.row as unknown as Record<string, unknown>)[k] ?? '')])),
   );
+  const [error, setError] = useState<string | null>(null);
   const locked = new Set(['game_id', 'pitch_id']);
   return (
     <div className="modal" role="dialog" aria-modal="true">
@@ -320,7 +324,15 @@ export function RowEditor(props: {
         className="card editor"
         onSubmit={(e) => {
           e.preventDefault();
-          const row = Object.fromEntries(Object.entries(props.schema).map(([k, p]) => [k, typedValue(p, values[k].trim())]));
+          // Player fields take a player_id, VRChat name or alias; save the id, and refuse names nobody has.
+          const resolved = { ...values };
+          for (const k of Object.keys(resolved)) {
+            if (!PLAYER_FIELD.test(k) || !resolved[k].trim()) continue;
+            const id = props.people.resolve(resolved[k]);
+            if (!id) return setError(`${k}: "${resolved[k].trim()}" is not a known player. Add new players with Sub (or in Setup) first.`);
+            resolved[k] = id;
+          }
+          const row = Object.fromEntries(Object.entries(props.schema).map(([k, p]) => [k, typedValue(p, resolved[k].trim())]));
           props.onSave(row as unknown as PitchRow);
         }}
       >
@@ -349,6 +361,7 @@ export function RowEditor(props: {
             </label>
           ))}
         </div>
+        {error && <p className="error">{error}</p>}
         <div className="row">
           <button type="submit">Save row</button>
           <button type="button" className="secondary" onClick={props.onCancel}>

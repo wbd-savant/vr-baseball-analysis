@@ -229,7 +229,7 @@ PERCENTILE_STATS = {
         ("chase_pct", False, "chase_pitches"), ("velo_avg", False, "velo_n"), ("hard_pct", True, "contact_rated"),
     ],
 }
-QUALIFY = {"batting": ("pa", 10), "pitching": ("bf", 15)}
+QUALIFY = {"batting": ("pa", 5), "pitching": ("bf", 15)}
 MIN_POOL = 5  # fewer qualified players than this and no percentiles are shown for the season
 
 

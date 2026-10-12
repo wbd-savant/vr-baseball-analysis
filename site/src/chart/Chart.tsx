@@ -185,6 +185,14 @@ export function Chart(props: {
   /** Put `id` in for whoever holds `pos`; they also take that player's batting-order spot. */
   function substitute(pos: number | 'batter', id: string, added?: NewPlayer) {
     const side = pos === 'batter' ? bat : fld;
+    // A player already in the game is a position move, not a substitution: replacing someone's
+    // batting-order spot with them would list them twice and drop the player they replace.
+    if (teamPlayers(side).includes(id)) {
+      if (pos === 'batter') return alert(`${people.name(id)} is already in the game, so cannot pinch-hit.`);
+      setPosition(pos, id);
+      setSub(null);
+      return;
+    }
     const old = holder(pos);
     const label = pos === 'batter' ? 'PH' : POSITION_LABEL[pos];
     let { rows, before } = draft;

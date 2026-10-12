@@ -104,12 +104,18 @@ export function Setup(props: { data: ServerData; draft: Draft | null; takenIds: 
       [order[i], order[i + d]] = [order[i + d], order[i]];
       setLineup(side, { order });
     };
+    // Remove this one spot; a player listed twice keeps the other spot and their position.
+    const remove = (i: number) => {
+      const id = l.order[i];
+      const order = l.order.filter((_, j) => j !== i);
+      setLineups({ ...lineups, [side]: { ...(order.includes(id) ? l : assignPosition(l, id, '')), order } });
+    };
     return (
       <section className="card">
         <h3>{side === 'away' ? 'Away' : 'Home'} lineup</h3>
         <ol className="order">
           {l.order.map((id, i) => (
-            <li key={id}>
+            <li key={`${id}-${i}`}>
               <span>{people.name(id)}</span>
               <select value={positionOf(l, id)} onChange={(e) => setLineups({ ...lineups, [side]: assignPosition(l, id, e.target.value) })} aria-label="position">
                 <option value="">pos.</option>
@@ -120,7 +126,7 @@ export function Setup(props: { data: ServerData; draft: Draft | null; takenIds: 
               </select>
               <button type="button" className="mini" disabled={i === 0} onClick={() => move(i, -1)} aria-label="move up">↑</button>
               <button type="button" className="mini" disabled={i === l.order.length - 1} onClick={() => move(i, 1)} aria-label="move down">↓</button>
-              <button type="button" className="mini" onClick={() => setLineups({ ...lineups, [side]: { ...assignPosition(l, id, ''), order: l.order.filter((x) => x !== id) } })} aria-label="remove">✕</button>
+              <button type="button" className="mini" onClick={() => remove(i)} aria-label="remove">✕</button>
             </li>
           ))}
         </ol>

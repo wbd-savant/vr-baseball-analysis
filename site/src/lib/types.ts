@@ -100,6 +100,8 @@ export interface League {
 export interface Meta {
   built_at: string;
   seasons: string[];
+  /** Seasons with a research report (report/{season}.json). */
+  reports?: string[];
   coverage: {
     games: number;
     pitches: number;
@@ -107,4 +109,110 @@ export interface Meta {
     games_per_team: Record<string, number>;
     partial_games: string[];
   };
+}
+
+/** Plate-discipline counts for a group of pitches (pipeline/research.py). */
+export interface DisciplineCounts {
+  pitches: number;
+  swings: number;
+  whiffs: number;
+  called: number;
+  fouls: number;
+  in_play: number;
+  located: number;
+  zone_pitches: number;
+  zone_swings: number;
+  zone_whiffs: number;
+  chase_pitches: number;
+  chase_swings: number;
+  chase_whiffs: number;
+}
+
+export interface ResultLine {
+  pa: number;
+  ab: number;
+  h: number;
+  hr: number;
+  bb: number;
+  hbp: number;
+  k: number;
+  tb: number;
+  avg: number | null;
+  obp: number | null;
+  slg: number | null;
+  ops: number | null;
+}
+
+export interface DirectionCounts {
+  bip: number;
+  located: number;
+  pull: number;
+  center: number;
+  oppo: number;
+  pull_hits: number;
+  center_hits: number;
+  oppo_hits: number;
+  ground: number;
+  line: number;
+  fly: number;
+  popup: number;
+  typed: number;
+  hits: number;
+  hard: number;
+  rated: number;
+}
+
+export interface Fit {
+  or: number;
+  lo: number;
+  hi: number;
+  p: number;
+  n: number;
+}
+
+export interface Trend extends Fit {
+  within: Fit | null;
+  without_one: { pitcher_id: string; p: number; or: number; n: number } | null;
+}
+
+/** report/{season}.json: research report, password only. */
+export interface ReportFile {
+  season: string;
+  sample: {
+    games: number;
+    pitches: number;
+    velo_pitches: number;
+    pa: number;
+    bip: number;
+    pitchers: number;
+    batters: number;
+    velo_min: number | null;
+    velo_max: number | null;
+    velo_median: number | null;
+    partial_games: number;
+  };
+  bands: string[];
+  discipline: ({ band: string; velo_avg: number; pitchers: number } & DisciplineCounts)[];
+  discipline_all: { velo_avg: number | null; pitchers: number } & DisciplineCounts;
+  discipline_fastballs: ({ band: string } & DisciplineCounts)[];
+  results: ({ band: string } & ResultLine)[];
+  results_all: ResultLine;
+  results_by_pitcher_speed: ({ group: number; pitchers: number; lo: number; hi: number } & ResultLine)[];
+  direction: ({ band: string } & DirectionCounts)[];
+  direction_all: DirectionCounts;
+  trends: Record<string, Trend | null>;
+  fatigue: {
+    slope: number;
+    lo: number;
+    hi: number;
+    p: number;
+    n: number;
+    outings: number;
+    by_number: { from: number; to: number | null; n: number; velo_avg: number; velo_rel: number }[];
+  } | null;
+  counts: ({ key: string } & DisciplineCounts)[];
+  platoon: ({ key: string } & ResultLine & DisciplineCounts)[];
+  contact: { key: string; bip: number; hits: number; tb: number }[];
+  pitch_types: ({ code: string; fastball: boolean; velo_n: number; velo_avg: number | null; pitchers: number; bip: number; hits: number } & DisciplineCounts)[];
+  pitchers: { id: string; name: string; pitches: number; velo_avg: number | null }[];
 }

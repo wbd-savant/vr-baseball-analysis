@@ -11,6 +11,7 @@ import { Glossary } from '../pages/Glossary';
 import { Home } from '../pages/Home';
 import { Leaderboard } from '../pages/Leaderboard';
 import { Player } from '../pages/Player';
+import { Report } from '../pages/Report';
 
 vi.mock('../lib/loadData', () => ({
   isPublicMode: true,
@@ -31,12 +32,24 @@ function at(url: string) {
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/player/:slug" element={<Player />} />
         <Route path="/glossary" element={<Glossary />} />
+        <Route path="/report/:season" element={<Report />} />
       </Routes>
     </MemoryRouter>,
   );
 }
 
 describe('pages', () => {
+  it('research report renders its sections with samples', async () => {
+    at('/report/fx-season');
+    expect(await screen.findByRole('heading', { name: ko.report.title('fx-season') })).toBeTruthy();
+    expect(screen.getByText(/기록된 경기 1개 · 투구 14개/)).toBeTruthy();
+    for (const h of [ko.report.findings, ko.report.discipline, ko.report.results, ko.report.direction, ko.report.other]) {
+      expect(screen.getByRole('heading', { name: h })).toBeTruthy();
+    }
+    // Rates carry their sample, e.g. swings / pitches in the "all" column.
+    expect(screen.getAllByTitle(/^표본 \d+\/\d+$/).length).toBeGreaterThan(0);
+  });
+
   it('home lists the charted game and coverage', async () => {
     at('/');
     expect(await screen.findByText(/기록된 경기 1개/)).toBeTruthy();

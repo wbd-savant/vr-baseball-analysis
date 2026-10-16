@@ -7,8 +7,11 @@ import { Glossary } from './pages/Glossary';
 import { Home } from './pages/Home';
 import { Leaderboard } from './pages/Leaderboard';
 import { Player } from './pages/Player';
+import { Report } from './pages/Report';
 import { ko } from './i18n/ko';
 import { isPublicMode, lock } from './lib/loadData';
+import type { Meta } from './lib/types';
+import { useData } from './lib/useData';
 import './styles.css';
 
 export function App() {
@@ -28,6 +31,8 @@ function SampleOnly() {
 
 function Site() {
   const { full, samplePlayers, openGate } = useAccess();
+  // Reports are password only, so the link appears (and meta.json loads) only once unlocked.
+  const report = useData<Meta>(full ? 'meta.json' : null).data?.reports?.at(-1);
   return (
     <>
       <header className="topbar">
@@ -36,6 +41,7 @@ function Site() {
         </NavLink>
         <nav>
           {full && <NavLink to="/leaderboard">{ko.nav.leaderboard}</NavLink>}
+          {full && report && <NavLink to={`/report/${report}`}>{ko.report.nav}</NavLink>}
           <NavLink to="/glossary">{ko.nav.glossary}</NavLink>
         </nav>
         {full && <SearchBox />}
@@ -74,6 +80,7 @@ function Site() {
         <Route path="/" element={full ? <Home /> : <Navigate to={`/player/${samplePlayers[0]?.slug}`} replace />} />
         <Route path="/leaderboard" element={full ? <Leaderboard /> : <FullOnly />} />
         <Route path="/player/:slug" element={full ? <Player /> : <SampleOnly />} />
+        <Route path="/report/:season" element={full ? <Report /> : <FullOnly />} />
         <Route path="/glossary" element={<Glossary />} />
         <Route path="*" element={<main className="page"><p>{ko.common.notFound}</p></main>} />
       </Routes>

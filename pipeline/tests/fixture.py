@@ -83,7 +83,7 @@ def write_site_fixture() -> None:
 
     with tempfile.TemporaryDirectory() as tmp:
         write_fixture(Path(tmp))
-        files = build_outputs(load_raw(Path(tmp)))
+        files = build_outputs(load_raw(Path(tmp)), report_seasons=[SEASON])
     files["meta.json"]["built_at"] = "2026-01-01T00:00:00+00:00"
     out = ROOT / "site" / "src" / "test" / "fixture.json"
     out.parent.mkdir(parents=True, exist_ok=True)

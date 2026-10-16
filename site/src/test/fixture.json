@@ -2846,19 +2846,368 @@
   },
   "pitch_types": {
    "FF": "포심 패스트볼",
+   "FT": "투심 패스트볼",
    "SI": "싱커",
    "FC": "커터",
    "SL": "슬라이더",
    "CU": "커브",
    "SP": "스플리터",
    "CH": "체인지업",
+   "KN": "너클볼",
+   "SC": "스크루볼",
    "RF": "라이징 패스트볼",
-   "RL": "라이징 슬라이더"
+   "RL": "라이징 슬라이더",
+   "DF": "드롭 패스트볼"
   }
+ },
+ "report/fx-season.json": {
+  "season": "fx-season",
+  "sample": {
+   "games": 1,
+   "pitches": 14,
+   "velo_pitches": 14,
+   "pa": 7,
+   "bip": 4,
+   "pitchers": 2,
+   "batters": 7,
+   "velo_min": 101.0,
+   "velo_max": 114.0,
+   "velo_median": 107.5,
+   "partial_games": 0
+  },
+  "bands": [
+   "lt110",
+   "110",
+   "120",
+   "125",
+   "130"
+  ],
+  "discipline": [
+   {
+    "band": "lt110",
+    "velo_avg": 105.0,
+    "pitchers": 1,
+    "pitches": 9,
+    "swings": 3,
+    "whiffs": 1,
+    "called": 1,
+    "fouls": 1,
+    "in_play": 1,
+    "located": 9,
+    "zone_pitches": 3,
+    "zone_swings": 2,
+    "zone_whiffs": 1,
+    "chase_pitches": 6,
+    "chase_swings": 1,
+    "chase_whiffs": 0
+   },
+   {
+    "band": "110",
+    "velo_avg": 112.0,
+    "pitchers": 2,
+    "pitches": 5,
+    "swings": 4,
+    "whiffs": 1,
+    "called": 0,
+    "fouls": 0,
+    "in_play": 3,
+    "located": 5,
+    "zone_pitches": 3,
+    "zone_swings": 3,
+    "zone_whiffs": 0,
+    "chase_pitches": 2,
+    "chase_swings": 1,
+    "chase_whiffs": 1
+   }
+  ],
+  "discipline_all": {
+   "velo_avg": 107.5,
+   "pitchers": 2,
+   "pitches": 14,
+   "swings": 7,
+   "whiffs": 2,
+   "called": 1,
+   "fouls": 1,
+   "in_play": 4,
+   "located": 14,
+   "zone_pitches": 6,
+   "zone_swings": 5,
+   "zone_whiffs": 1,
+   "chase_pitches": 8,
+   "chase_swings": 2,
+   "chase_whiffs": 1
+  },
+  "discipline_fastballs": [],
+  "results": [
+   {
+    "band": "lt110",
+    "pa": 2,
+    "ab": 1,
+    "h": 1,
+    "hr": 1,
+    "bb": 1,
+    "hbp": 0,
+    "k": 0,
+    "tb": 4,
+    "avg": 1.0,
+    "obp": 1.0,
+    "slg": 4.0,
+    "ops": 5.0
+   },
+   {
+    "band": "110",
+    "pa": 5,
+    "ab": 4,
+    "h": 2,
+    "hr": 0,
+    "bb": 0,
+    "hbp": 1,
+    "k": 1,
+    "tb": 3,
+    "avg": 0.5,
+    "obp": 0.6,
+    "slg": 0.75,
+    "ops": 1.35
+   }
+  ],
+  "results_all": {
+   "pa": 7,
+   "ab": 5,
+   "h": 3,
+   "hr": 1,
+   "bb": 1,
+   "hbp": 1,
+   "k": 1,
+   "tb": 7,
+   "avg": 0.6,
+   "obp": 0.7143,
+   "slg": 1.4,
+   "ops": 2.1143
+  },
+  "results_by_pitcher_speed": [
+   {
+    "group": 0,
+    "pitchers": 2,
+    "lo": 106.0,
+    "hi": 113.0,
+    "pa": 7,
+    "ab": 5,
+    "h": 3,
+    "hr": 1,
+    "bb": 1,
+    "hbp": 1,
+    "k": 1,
+    "tb": 7,
+    "avg": 0.6,
+    "obp": 0.7143,
+    "slg": 1.4,
+    "ops": 2.1143
+   }
+  ],
+  "direction": [
+   {
+    "band": "lt110",
+    "bip": 1,
+    "located": 0,
+    "pull": 0,
+    "center": 0,
+    "oppo": 0,
+    "pull_hits": 0,
+    "center_hits": 0,
+    "oppo_hits": 0,
+    "ground": 0,
+    "line": 0,
+    "fly": 1,
+    "popup": 0,
+    "bunt": 0,
+    "typed": 1,
+    "hits": 1,
+    "hard": 1,
+    "rated": 1
+   },
+   {
+    "band": "110",
+    "bip": 3,
+    "located": 0,
+    "pull": 0,
+    "center": 0,
+    "oppo": 0,
+    "pull_hits": 0,
+    "center_hits": 0,
+    "oppo_hits": 0,
+    "ground": 1,
+    "line": 1,
+    "fly": 1,
+    "popup": 0,
+    "bunt": 0,
+    "typed": 3,
+    "hits": 2,
+    "hard": 1,
+    "rated": 1
+   }
+  ],
+  "direction_all": {
+   "bip": 4,
+   "located": 0,
+   "pull": 0,
+   "center": 0,
+   "oppo": 0,
+   "pull_hits": 0,
+   "center_hits": 0,
+   "oppo_hits": 0,
+   "ground": 1,
+   "line": 1,
+   "fly": 2,
+   "popup": 0,
+   "bunt": 0,
+   "typed": 4,
+   "hits": 3,
+   "hard": 2,
+   "rated": 2
+  },
+  "trends": {
+   "swing": null,
+   "whiff": null,
+   "chase": null,
+   "zone_swing": null,
+   "zone": null,
+   "csw": null,
+   "on_base": null,
+   "pull": null,
+   "ground": null
+  },
+  "fatigue": null,
+  "counts": [
+   {
+    "key": "first_pitch",
+    "pitches": 7,
+    "swings": 4,
+    "whiffs": 1,
+    "called": 0,
+    "fouls": 0,
+    "in_play": 3,
+    "located": 7,
+    "zone_pitches": 4,
+    "zone_swings": 4,
+    "zone_whiffs": 1,
+    "chase_pitches": 3,
+    "chase_swings": 0,
+    "chase_whiffs": 0
+   },
+   {
+    "key": "count_ahead",
+    "pitches": 4,
+    "swings": 0,
+    "whiffs": 0,
+    "called": 1,
+    "fouls": 0,
+    "in_play": 0,
+    "located": 4,
+    "zone_pitches": 1,
+    "zone_swings": 0,
+    "zone_whiffs": 0,
+    "chase_pitches": 3,
+    "chase_swings": 0,
+    "chase_whiffs": 0
+   },
+   {
+    "key": "count_even",
+    "pitches": 8,
+    "swings": 5,
+    "whiffs": 1,
+    "called": 0,
+    "fouls": 0,
+    "in_play": 4,
+    "located": 8,
+    "zone_pitches": 5,
+    "zone_swings": 5,
+    "zone_whiffs": 1,
+    "chase_pitches": 3,
+    "chase_swings": 0,
+    "chase_whiffs": 0
+   },
+   {
+    "key": "count_behind",
+    "pitches": 2,
+    "swings": 2,
+    "whiffs": 1,
+    "called": 0,
+    "fouls": 1,
+    "in_play": 0,
+    "located": 2,
+    "zone_pitches": 0,
+    "zone_swings": 0,
+    "zone_whiffs": 0,
+    "chase_pitches": 2,
+    "chase_swings": 2,
+    "chase_whiffs": 1
+   },
+   {
+    "key": "two_strikes",
+    "pitches": 1,
+    "swings": 1,
+    "whiffs": 1,
+    "called": 0,
+    "fouls": 0,
+    "in_play": 0,
+    "located": 1,
+    "zone_pitches": 0,
+    "zone_swings": 0,
+    "zone_whiffs": 0,
+    "chase_pitches": 1,
+    "chase_swings": 1,
+    "chase_whiffs": 1
+   }
+  ],
+  "platoon": [],
+  "contact": [
+   {
+    "key": "hard",
+    "bip": 2,
+    "hits": 2,
+    "tb": 6
+   },
+   {
+    "key": "ground",
+    "bip": 1,
+    "hits": 0,
+    "tb": 0
+   },
+   {
+    "key": "line",
+    "bip": 1,
+    "hits": 1,
+    "tb": 1
+   },
+   {
+    "key": "fly",
+    "bip": 2,
+    "hits": 2,
+    "tb": 6
+   }
+  ],
+  "pitch_types": [],
+  "pitchers": [
+   {
+    "id": "v-p",
+    "name": "VR_v-p",
+    "pitches": 3,
+    "velo_avg": 113.0
+   },
+   {
+    "id": "h-p",
+    "name": "VR_h-p",
+    "pitches": 11,
+    "velo_avg": 106.0
+   }
+  ]
  },
  "meta.json": {
   "built_at": "2026-01-01T00:00:00+00:00",
   "seasons": [
+   "fx-season"
+  ],
+  "reports": [
    "fx-season"
   ],
   "coverage": {

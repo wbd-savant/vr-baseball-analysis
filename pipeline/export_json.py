@@ -1,7 +1,7 @@
 """Validate the raw data, build stats, and write the site's JSON files.
 
 Outputs (in site/public/data/ by default): meta.json, players.json, player/{slug}.json,
-teams.json, games.json, game/{game_id}.json, league.json.
+teams.json, games.json, game/{game_id}.json, league.json, report/{season}.json.
 """
 
 import argparse
@@ -26,6 +26,7 @@ from build_stats import (
     splits,
 )
 from rawdata import RAW_DIR, ROOT, RawData, display_name, load_raw, pitch_types
+from research import season_report
 from romanize import romanize
 from validate import print_report, validate
 
@@ -33,6 +34,8 @@ DEFAULT_OUT = ROOT / "site" / "public" / "data"
 # Player pages anyone can see without the password (plain JSON, outside the encrypted data folder).
 SAMPLE_PLAYERS = ["mir-mireu", "greatmoonaroma"]
 SAMPLE_OUT = ROOT / "site" / "public" / "sample"
+# Seasons with a research report (password only: never part of the sample files).
+REPORT_SEASONS = ["sbo-2026"]
 # Fields copied into players.json for search and leaderboards (rates travel with their denominators).
 BATTING_SUMMARY = [
     "pa", "ab", "h", "hr", "bb", "k", "avg", "obp", "slg", "ops", "k_pct", "bb_pct",
@@ -67,7 +70,7 @@ def records(df: pd.DataFrame, cols: list[str]) -> list[dict]:
     return [dict(zip(cols, row)) for row in df[cols].itertuples(index=False, name=None)]
 
 
-def build_outputs(data: RawData) -> dict[str, object]:
+def build_outputs(data: RawData, report_seasons: list[str] = REPORT_SEASONS) -> dict[str, object]:
     df = pitch_frame(data)
     players = {p["player_id"]: p for p in data.players}
     games = {g["game_id"]: g for g in data.games}
@@ -217,6 +220,14 @@ def build_outputs(data: RawData) -> dict[str, object]:
     # Pitch type names come from data/schema/pitch_types.csv, so a new type needs no site change.
     files["league.json"] = {"seasons": league, "pitch_types": {t["code"]: t["label_ko"] for t in pitch_types()}}
 
+    reports = []
+    for season in report_seasons:
+        report = season_report(df, season, {pid: display_name(p) for pid, p in players.items()}) if not df.empty else None
+        if report:
+            report["sample"]["partial_games"] = sum(1 for g in data.games if g["season"] == season and g["chart_status"] == "partial")
+            files[f"report/{season}.json"] = report
+            reports.append(season)
+
     games_per_team = defaultdict(int)
     for g in game_index:
         if g["pitches"]:
@@ -225,6 +236,7 @@ def build_outputs(data: RawData) -> dict[str, object]:
     files["meta.json"] = {
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "seasons": sorted(league),
+        "reports": reports,
         "coverage": {
             "games": sum(1 for g in game_index if g["pitches"]),
             "pitches": len(pitch_rows),

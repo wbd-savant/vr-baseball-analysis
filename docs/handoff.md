@@ -231,7 +231,7 @@ Raw data and the charting tool know players by **VRChat username**; the site sho
 | `balls`, `strikes`, `outs` | int | state **before** the pitch |
 | `runner_1`, `runner_2`, `runner_3` | player_id or blank | who is on each base before the pitch |
 | `velo` | float | as shown on stream; blank if not shown |
-| `pitch_type` | enum or blank | seen so far: `FF` four-seam, `SI` sinker, `FC` cutter, `SL` slider, `CU` curve, `SP` splitter, `RF` rising fastball, `RL` rising slider. `RF`/`RL` are game-specific. Keep the list in `data/schema/pitch_types.csv` (code, Korean label) so new types need no code change. |
+| `pitch_type` | enum or blank | seen so far: `FF` four-seam, `FT` two-seam, `SI` sinker, `FC` cutter, `SL` slider, `CU` curve, `SP` splitter, `KN` knuckleball, `SC` screwball, `RF` rising fastball, `RL` rising slider, `DF` drop fastball. `RF`/`RL`/`DF` are game-specific. Keep the list in `data/schema/pitch_types.csv` (code, Korean label) so new types need no code change. |
 | `pitch_type_source` | `stream` / `charter` / blank | whether the label came from the broadcast or the charter's eye |
 | `zone` | int 1-9, 11-14, or blank | Savant zone numbers, from the catcher's view |
 | `result` | enum | `ball`, `called_strike`, `swinging_strike`, `foul`, `foul_tip`, `in_play`, `hbp` |

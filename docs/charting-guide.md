@@ -24,7 +24,7 @@ The charting tool fills in the count, outs, inning, score and runners for you an
 | Pitcher, batter, catcher | nickname | Pick from the lineup; never retype a name, so spellings cannot drift. |
 | Pitcher hand, batter side | L / R | Set at the start of each at-bat. Change it whenever the player switches. |
 | Velocity | km/h | As shown. Leave blank if not shown; never estimate. |
-| Pitch type | FF, SI, FC, SL, CU, SP, RF, RL, or blank | **Blank when the stream does not show it.** Do not default to FF. If you are guessing from movement, enter the guess and tick "my guess". |
+| Pitch type | FF, FT, SI, FC, SL, CU, SP, CH, KN, SC, RF, RL, DF, or blank | **Blank when the stream does not show it.** Do not default to FF. If you are guessing from movement, enter the guess and tick "my guess". |
 | Zone | 1-9, 11-14 | Catcher's view. 1-9 inside the zone, 11-14 outside. |
 | Result | ball, called strike, swinging strike, foul, foul tip, in play, hit by pitch | "Swinging strike" means a miss. Use "foul tip" when the game does not count it as a strike. |
 | Video time | seconds | One key press stamps it. |

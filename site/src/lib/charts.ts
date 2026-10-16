@@ -62,7 +62,7 @@ export function applyFilter(rows: PitchRec[], f: ChartFilter, role: 'batting' | 
 
 // ---- Velocity distribution (KDE per pitch type) ------------------------------------------------
 
-export const FASTBALLS = new Set(['FF', 'SI', 'FC', 'RF']);
+export const FASTBALLS = new Set(['FF', 'FT', 'SI', 'FC', 'RF', 'DF']);
 /** Fewer pitches than this: show each pitch as a dot instead of a curve. */
 export const KDE_MIN_N = 5;
 /** Colored series per chart; four hues are all that stay distinct pairwise in both themes. */

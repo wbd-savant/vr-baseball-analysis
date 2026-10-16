@@ -142,11 +142,18 @@ iframe.video { border: 0; display: block; }
 .zcell.on { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
 
 .bip { display: grid; grid-template-columns: 260px 1fr; gap: 0.75rem; margin-top: 0.5rem; }
-.field { width: 100%; cursor: crosshair; background: var(--bg); border-radius: 6px; }
-.field .grass { fill: var(--grass); stroke: var(--muted); stroke-width: 1; }
-.field .infield { fill: var(--dirt); }
-.field .pos { font-size: 11px; text-anchor: middle; dominant-baseline: middle; fill: var(--muted); }
-.field .pos.on { fill: var(--accent); font-weight: 700; }
+.field { width: 100%; cursor: crosshair; background: #3b3a38; border-radius: 6px; }
+/* Colors copy the in-game overhead map, so they stay the same in light and dark mode. */
+.field .foul { fill: #3b3a38; }
+.field .grass { fill: #4a7a35; stroke: #2e4d22; stroke-width: 1.5; }
+.field .stripe { fill: #548540; }
+.field .infield-grass { fill: #4a7a35; }
+.field .dirt { fill: #6e6458; }
+.field .arc { fill: none; stroke: #f2f2f2; stroke-width: 1; stroke-dasharray: 3 2; }
+.field .line { fill: none; stroke: #f2f2f2; stroke-width: 1; }
+.field .base { fill: #f2f2f2; }
+.field .pos { font-size: 11px; text-anchor: middle; dominant-baseline: middle; fill: #e6e6e6; }
+.field .pos.on { fill: #ffd84d; font-weight: 700; }
 .field .landing { fill: var(--error); }
 
 .commit { width: 100%; margin-top: 0.75rem; padding: 0.6rem; font-size: 1rem; }

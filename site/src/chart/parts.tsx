@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { bases, fielderSpots, PLATE, wall } from '../lib/field';
+import { BASE_PATH, bases, fielderSpots, fromBasePaths, PLATE, wall } from '../lib/field';
 import type { NewPlayer, SchemaProp } from './data';
 import { typedValue } from './data';
 import type { PitchRow } from './engine';
@@ -133,7 +133,10 @@ export function ZoneGrid(props: { value: number | null; onChange: (z: number | n
   );
 }
 
-/** Field diagram (lib/field.ts coordinates). Click to mark the landing spot. */
+/** Infield dirt arc radius around the mound: 95 ft over a 90 ft base path, as on a regulation field. */
+const INFIELD_ARC = (95 / 90) * BASE_PATH;
+
+/** Field diagram (lib/field.ts coordinates), drawn like the in-game overhead map. Click to mark the landing spot. */
 export function FieldDiagram(props: {
   point: { x: number; y: number } | null;
   fielder: number | null;
@@ -159,8 +162,27 @@ export function FieldDiagram(props: {
         props.onPoint({ x: Math.round(p.x * 1000) / 1000, y: Math.round(p.y * 1000) / 1000 }, Number(nearest));
       }}
     >
+      <defs>
+        <pattern id="mow" width={S / 15} height={S / 15} patternUnits="userSpaceOnUse">
+          <rect width={S / 30} height={S / 15} className="stripe" />
+        </pattern>
+        <clipPath id="fair">
+          <polygon points={pts(fair)} />
+        </clipPath>
+      </defs>
+      <rect x={0} y={0} width={S} height={S} className="foul" />
       <polygon points={pts(fair)} className="grass" />
-      <polygon points={pts([bases.home, bases.first, bases.second, bases.third])} className="infield" />
+      <polygon points={pts(fair)} fill="url(#mow)" />
+      {/* Infield dirt: everything inside the arc is infield, everything past it outfield. */}
+      <circle cx={bases.mound.x * S} cy={bases.mound.y * S} r={INFIELD_ARC * S} className="dirt" clipPath="url(#fair)" />
+      <circle cx={bases.mound.x * S} cy={bases.mound.y * S} r={INFIELD_ARC * S} className="arc" clipPath="url(#fair)" />
+      <polygon points={pts([fromBasePaths(0.1, 0.1), fromBasePaths(0.9, 0.1), fromBasePaths(0.9, 0.9), fromBasePaths(0.1, 0.9)])} className="infield-grass" />
+      <circle cx={bases.mound.x * S} cy={bases.mound.y * S} r={0.1 * BASE_PATH * S} className="dirt" />
+      <circle cx={PLATE.x * S} cy={PLATE.y * S} r={0.15 * BASE_PATH * S} className="dirt" />
+      <polyline points={pts([wall[0], PLATE, wall[wall.length - 1]])} className="line" />
+      {[bases.first, bases.second, bases.third].map((b, i) => (
+        <rect key={i} x={b.x * S - 2.5} y={b.y * S - 2.5} width={5} height={5} transform={`rotate(45 ${b.x * S} ${b.y * S})`} className="base" />
+      ))}
       {Object.entries(fielderSpots).map(([pos, p]) => (
         <text key={pos} x={p.x * S} y={p.y * S} className={`pos ${props.fielder === Number(pos) ? 'on' : ''}`}>
           {pos}

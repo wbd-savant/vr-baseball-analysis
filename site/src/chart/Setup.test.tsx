@@ -18,7 +18,7 @@ const data = {
 
 const draft = {
   game: { game_id: 'g', season: 's', date: null, label: null, home_team_id: 'h', away_team_id: 'a', home_final: null, away_final: null, vod_url: null, charted_by: null, chart_status: 'partial', velo_unit: 'km/h', game_version: null },
-  pitchTypesShown: 'yes', pitchTypesFromInning: null, lite: false, dh: false, newPlayers: [], newTeams: [],
+  pitchTypesShown: 'yes', pitchTypesFromInning: null, lite: false, dh: false, newPlayers: [], newTeams: [], rows: [],
   lineups: {
     away: { order: ['away1'], pitcher: 'away1', catcher: null, fielders: {}, dh: null },
     home: {
@@ -59,5 +59,23 @@ describe('setup lineup editor', () => {
     const saved = onDone.mock.calls[0][0].lineups.home;
     expect(saved.order).toEqual(['summer030', 'ma-wang', 'pli', 'beberrying', 'hadia', 'pporingeol', 'yun', 'kyurang', 'waangi']);
     expect([saved.pitcher, saved.fielders[8]]).toEqual(['pporingeol', 'ma-wang']);
+  });
+
+  it('swaps the teams and their whole lineups', () => {
+    const onDone = vi.fn();
+    render(<Setup data={data} draft={draft} takenIds={new Set()} onDone={onDone} onCancel={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Swap home and away' }));
+    expect(order()).toEqual(['Away One']);
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    fireEvent.click(screen.getByRole('button', { name: 'Save setup' }));
+    const r = onDone.mock.calls[0][0];
+    expect([r.game.home_team_id, r.game.away_team_id]).toEqual(['a', 'h']);
+    expect(r.lineups.home).toEqual(draft.lineups.away);
+    expect(r.lineups.away).toEqual(draft.lineups.home);
+  });
+
+  it('does not offer the swap once pitches are charted', () => {
+    render(<Setup data={data} draft={{ ...draft, rows: [{}] } as unknown as Draft} takenIds={new Set()} onDone={() => {}} onCancel={() => {}} />);
+    expect(screen.getByRole('button', { name: 'Swap home and away' })).toHaveProperty('disabled', true);
   });
 });

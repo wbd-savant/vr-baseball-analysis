@@ -66,6 +66,12 @@ export function Setup(props: { data: ServerData; draft: Draft | null; takenIds: 
   const set = <K extends keyof GameMeta>(k: K, v: GameMeta[K]) => setGame({ ...game, [k]: v });
   const text = (v: string) => (v.trim() === '' ? null : v.trim());
   const setLineup = (side: Side, l: Partial<Lineup>) => setLineups({ ...lineups, [side]: { ...lineups[side], ...l } });
+  // Charted rows record top/bottom, which a swap would contradict, so only offer it before the first pitch.
+  const canSwap = !props.draft?.rows.length;
+  function swapSides() {
+    setGame({ ...game, home_team_id: game.away_team_id, away_team_id: game.home_team_id, home_final: game.away_final, away_final: game.home_final });
+    setLineups({ home: lineups.away, away: lineups.home });
+  }
 
   function submit() {
     const e: string[] = [];
@@ -226,6 +232,9 @@ export function Setup(props: { data: ServerData; draft: Draft | null; takenIds: 
           Lite mode (velocity, zone, result, at-bat outcome and fielder only)
         </label>
       </section>
+      <button type="button" className="secondary" disabled={!canSwap} onClick={swapSides} title={canSwap ? undefined : 'Pitches are already charted with this home/away'}>
+        Swap home and away
+      </button>
       <div className="lineups">
         {lineupEditor('away')}
         {lineupEditor('home')}

@@ -38,7 +38,7 @@ export const ko = {
     title: '스카우팅 홈',
     builtAt: '데이터 갱신',
     coverage: (games: number, pitches: string) => `기록된 경기 ${games}개 · 투구 ${pitches}개`,
-    coverageNote: 'NEW!: WBD 2025 본선경기 전부 기록 완료!',
+    coverageNote: '모든 연습경기 기록 완료',
     recentGames: '기록된 경기',
     partial: '일부만 기록',
     leaderboards: '리더보드 보기',

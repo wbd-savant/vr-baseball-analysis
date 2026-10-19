@@ -165,8 +165,8 @@ def season_report(df: pd.DataFrame, season: str, names: dict[str, str]) -> dict 
 
     # In-game velocity: fastball velocity relative to the pitcher's fastball average in that game, against the
     # pitch number in the outing (all pitches counted). Fastballs only, so a changing pitch mix cannot explain it.
-    outing = v.groupby(["game_id", "pitcher_id"])
-    number = outing.cumcount()
+    outing = pitches.groupby(["game_id", "pitcher_id"])
+    number = outing.cumcount()  # every pitch counts, with or without a velocity reading
     fb = v[v.pitch_type.isin(FASTBALLS)]
     fb_rel = fb.velo - fb.groupby(["game_id", "pitcher_id"]).velo.transform("mean")
     fatigue = ols_slope(number[fb.index].to_numpy() / 10, fb_rel.to_numpy())

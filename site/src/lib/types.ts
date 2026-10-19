@@ -97,6 +97,13 @@ export interface League {
   pitch_types: Record<string, string>;
 }
 
+/** league/{season}.json: league-wide splits and chart pitches (password only). */
+export interface LeagueSeasonFile {
+  season: string;
+  splits: Split[];
+  pitches: PitchRec[];
+}
+
 export interface Meta {
   built_at: string;
   seasons: string[];

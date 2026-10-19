@@ -56,5 +56,13 @@ class ResearchTest(unittest.TestCase):
         self.assertFalse(any(k.startswith("report/") for k in sample_files(self.out, ["v-a"])))
 
 
+    def test_league_season_file_is_password_only(self):
+        league = self.out[f"league/{SEASON}.json"]
+        self.assertEqual(len(league["pitches"]), 14)
+        self.assertFalse(any("pitcher_id" in p or "batter_id" in p for p in league["pitches"]))  # no player ids
+        self.assertIn("two_strikes", [sp["key"] for sp in league["splits"]])
+        self.assertFalse(any(k.startswith("league/") for k in sample_files(self.out, ["v-a"])))
+
+
 if __name__ == "__main__":
     unittest.main()

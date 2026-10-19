@@ -1,7 +1,7 @@
 """Validate the raw data, build stats, and write the site's JSON files.
 
 Outputs (in site/public/data/ by default): meta.json, players.json, player/{slug}.json,
-teams.json, games.json, game/{game_id}.json, league.json, report/{season}.json.
+teams.json, games.json, game/{game_id}.json, league.json, league/{season}.json, report/{season}.json.
 """
 
 import argparse
@@ -216,6 +216,12 @@ def build_outputs(data: RawData, report_seasons: list[str] = REPORT_SEASONS) -> 
                 "games": int(rows.game_id.nunique()),
                 "batting": batting_line(rows[rows.pa_result.notna()], rows[rows.result.notna()]),
                 "pitching": pitching_line(rows),
+            }
+            # League page charts and splits (password only; league.json itself is also public for the example pages).
+            files[f"league/{season}.json"] = {
+                "season": season,
+                "splits": splits(rows, "batting"),
+                "pitches": records(rows[rows.result.notna() & rows.detailed], PITCH_FIELDS),
             }
     # Pitch type names come from data/schema/pitch_types.csv, so a new type needs no site change.
     files["league.json"] = {"seasons": league, "pitch_types": {t["code"]: t["label_ko"] for t in pitch_types()}}

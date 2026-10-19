@@ -5,6 +5,7 @@ import { FullOnly, PasswordGate, useAccess } from './components/PasswordGate';
 import { SearchBox } from './components/SearchBox';
 import { Glossary } from './pages/Glossary';
 import { Home } from './pages/Home';
+import { League } from './pages/League';
 import { Leaderboard } from './pages/Leaderboard';
 import { Player } from './pages/Player';
 import { Report } from './pages/Report';
@@ -41,6 +42,7 @@ function Site() {
         </NavLink>
         <nav>
           {full && <NavLink to="/leaderboard">{ko.nav.leaderboard}</NavLink>}
+          {full && <NavLink to="/league">{ko.nav.league}</NavLink>}
           {full && report && <NavLink to={`/report/${report}`}>{ko.report.nav}</NavLink>}
           <NavLink to="/glossary">{ko.nav.glossary}</NavLink>
         </nav>
@@ -79,6 +81,7 @@ function Site() {
       <Routes>
         <Route path="/" element={full ? <Home /> : <Navigate to={`/player/${samplePlayers[0]?.slug}`} replace />} />
         <Route path="/leaderboard" element={full ? <Leaderboard /> : <FullOnly />} />
+        <Route path="/league" element={full ? <League /> : <FullOnly />} />
         <Route path="/player/:slug" element={full ? <Player /> : <SampleOnly />} />
         <Route path="/report/:season" element={full ? <Report /> : <FullOnly />} />
         <Route path="/glossary" element={<Glossary />} />

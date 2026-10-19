@@ -9,6 +9,7 @@ import { ko } from '../i18n/ko';
 import { SearchBox } from '../components/SearchBox';
 import { Glossary } from '../pages/Glossary';
 import { Home } from '../pages/Home';
+import { League } from '../pages/League';
 import { Leaderboard } from '../pages/Leaderboard';
 import { Player } from '../pages/Player';
 import { Report } from '../pages/Report';
@@ -33,12 +34,22 @@ function at(url: string) {
         <Route path="/player/:slug" element={<Player />} />
         <Route path="/glossary" element={<Glossary />} />
         <Route path="/report/:season" element={<Report />} />
+        <Route path="/league" element={<League />} />
       </Routes>
     </MemoryRouter>,
   );
 }
 
 describe('pages', () => {
+  it('league page shows the season line with samples, charts and splits', async () => {
+    at('/league');
+    expect(await screen.findByRole('heading', { name: ko.league.title })).toBeTruthy();
+    expect(screen.getAllByText('fx-season').length).toBeGreaterThan(0);
+    expect(screen.getAllByText(ko.league.gamesN(1)).length).toBeGreaterThan(0);
+    expect(await screen.findByRole('heading', { name: new RegExp(ko.league.splits) })).toBeTruthy();
+    expect(screen.getAllByText(new RegExp(ko.charts.pitchesShown(14))).length).toBeGreaterThan(0);
+  });
+
   it('research report renders its sections with samples', async () => {
     at('/report/fx-season');
     expect(await screen.findByRole('heading', { name: ko.report.title('fx-season') })).toBeTruthy();

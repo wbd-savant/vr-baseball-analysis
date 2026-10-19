@@ -27,6 +27,7 @@ export const ko = {
   nav: {
     home: '홈',
     leaderboard: '리더보드',
+    league: '리그 평균',
     glossary: '용어 설명',
   },
   search: {
@@ -202,6 +203,17 @@ export const ko = {
     weaknesses: '단점',
     opportunities: '기회',
     threats: '위험',
+  },
+  league: {
+    title: '리그 평균',
+    note: '기록된 경기만으로 계산한 시즌별 리그 전체 기록입니다. 아직 모든 경기가 기록된 시즌이 아닐 수 있습니다.',
+    season: '시즌',
+    games: '경기',
+    gamesN: (n: number) => `${n}경기`,
+    charts: '리그 전체 그래프',
+    chartsNote: '그래프는 차팅 도구로 기록한 경기의 모든 투구를 씁니다.',
+    noCharts: '이 시즌에는 그래프에 쓸 상세 기록이 없습니다.',
+    splits: '상황별 리그 기록',
   },
   report: {
     nav: '연구 리포트',
